@@ -25,8 +25,8 @@ async function fetchTides() {
   
       // Étape 2 : Appeler l'API Stormglass pour les extrêmes de marée
       const apiKey = '5a6ffd9e-19f7-11f0-a906-0242ac130003-5a6ffe0c-19f7-11f0-a906-0242ac130003';
-      const start = new Date().toISOString().split('T')[0]; // Date d'aujourd'hui
-      const end = start;
+      const start = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0]; // Yesterday
+      const end = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]; // Tomorrow
       const tideResponse = await fetch(
         `https://api.stormglass.io/v2/tide/extremes/point?lat=${lat}&lng=${lon}&start=${start}&end=${end}`,
         {
@@ -36,12 +36,18 @@ async function fetchTides() {
         }
       );
   
+      // Log the HTTP status and headers
+      console.log('HTTP Status:', tideResponse.status);
+      console.log('Response Headers:', tideResponse.headers);
+  
+      // Check if the response is OK
       if (!tideResponse.ok) {
         throw new Error(`Erreur HTTP ${tideResponse.status}: ${tideResponse.statusText}`);
       }
   
+      // Parse and log the JSON response
       const tideData = await tideResponse.json();
-      console.log('Réponse Stormglass:', tideData);
+      console.log('Réponse complète de Stormglass:', tideData);
       if (tideData.data && tideData.data.length > 0) {
         console.log('Premier objet de tideData.data:', tideData.data[0]);
       }
