@@ -65,7 +65,7 @@ async function fetchTides() {
       tideData.data.forEach(tide => {
         if (tide.height !== undefined && tide.height !== null) {
           const time = new Date(tide.time).toLocaleString('fr-FR');
-          const type = tide.type === 'High' ? 'Pleine mer' : 'Basse mer';
+          const type = tide.type === 'high' ? 'Pleine mer' : 'Basse mer';
           const coefficient = tide.coefficient !== undefined ? `, Coefficient : ${tide.coefficient}` : ''; // Vérifie si le coefficient est disponible
           output += `<p>${time} : ${tide.height.toFixed(2)} m (${type}${coefficient})</p>`;
           hasValidData = true;
