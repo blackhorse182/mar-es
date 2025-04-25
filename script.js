@@ -25,13 +25,13 @@ async function fetchTides() {
   
       // Étape 2 : Appeler l'API Stormglass pour les extrêmes de marée
       const apiKey = '5a6ffd9e-19f7-11f0-a906-0242ac130003-5a6ffe0c-19f7-11f0-a906-0242ac130003';
-      const start = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0]; // Yesterday
+      const start = new Date().toISOString().split('T')[0]; // Today
       const end = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]; // Tomorrow
       const tideResponse = await fetch(
         `https://api.stormglass.io/v2/tide/extremes/point?lat=${lat}&lng=${lon}&start=${start}&end=${end}`,
         {
           headers: {
-            Authorization: apiKey,
+        Authorization: apiKey,
           },
         }
       );
